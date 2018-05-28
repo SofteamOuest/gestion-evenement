@@ -1,0 +1,5 @@
+Feature: the evenement can be retrieved by id
+  Scenario: client makes call to GET /evenement/10
+    When the client calls /evenement/10
+    Then the client receives status code of 200
+    And the client receives the evenement with id 10
