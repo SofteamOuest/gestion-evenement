@@ -29,6 +29,11 @@ public class GestionEvenementRessource {
         return gestionEvenementService.getAllEvent();
     }
 
+    @GetMapping(path = "/evenement/limite")
+    public List<EvenementDto> getEvenementsAfterDate(@RequestParam("limite") String dateLimite) {
+        return gestionEvenementService.getEvenementsAfterDate(dateLimite);
+    }
+
     @PostMapping(path = "/evenement")
     @ResponseStatus(HttpStatus.CREATED)
     public EvenementDto ajouterEvenement(@RequestBody @Valid EvenementDto evenementDto) throws GestionEvenementException {

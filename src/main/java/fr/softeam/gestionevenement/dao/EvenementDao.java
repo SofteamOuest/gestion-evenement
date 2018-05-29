@@ -38,6 +38,11 @@ public class EvenementDao {
         });
     }
 
+    public List<EvenementDto> getEvenementsAfterDate(String dateLimite) {
+        String sql = "select * from evenement where date_evenement >= to_date(?,'YYYYMMDD')";
+        return jdbcTemplate.query(sql,new Object[]{dateLimite}, new BeanPropertyRowMapper<>(EvenementDto.class));
+    }
+
     public EvenementDto creerEvenement(EvenementDto evenementDto) {
         String sql = "insert into evenement (nom,description,date_evenement,date_validation,type,cycle,valeur_reccurence,type_reccurence,id_auteur) values (?,?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();

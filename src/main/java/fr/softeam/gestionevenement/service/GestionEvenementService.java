@@ -21,6 +21,10 @@ public class GestionEvenementService {
         return evenementDao.loadAllEvenement();
     }
 
+    public List<EvenementDto> getEvenementsAfterDate(String dateLimite){
+        return evenementDao.getEvenementsAfterDate(dateLimite);
+    }
+
     public EvenementDto creerEvenement(EvenementDto evenementDto) throws GestionEvenementException {
         dateEvenementDansLeFutur(evenementDto);
         controleCycle(evenementDto);
