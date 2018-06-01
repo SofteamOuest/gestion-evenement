@@ -5,6 +5,10 @@ import fr.softeam.gestionevenement.exception.GestionEvenementException;
 import fr.softeam.gestionevenement.model.EvenementDto;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +30,8 @@ public class GestionEvenementService {
     }
 
     public EvenementDto creerEvenement(EvenementDto evenementDto) throws GestionEvenementException {
-        dateEvenementDansLeFutur(evenementDto);
+        controleDateFormat(evenementDto.getDateEvenement());
+        controleDateEvenementDansLeFutur(evenementDto);
         controleCycle(evenementDto);
         return evenementDao.creerEvenement(evenementDto);
     }
@@ -43,9 +48,10 @@ public class GestionEvenementService {
         evenementDao.suppressionEvenementById(idEvenement);
     }
 
-    private void dateEvenementDansLeFutur(EvenementDto evenementDto) throws GestionEvenementException {
-        Date currentDate = new Date();
-        if(evenementDto.getDateEvenement() == null  || !currentDate.before(evenementDto.getDateEvenement())){
+    private void controleDateEvenementDansLeFutur(EvenementDto evenementDto) throws GestionEvenementException {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        if(evenementDto.getDateEvenement() == null  || !currentDate.isBefore(LocalDate.parse(evenementDto.getDateEvenement(),formatter))){
             throw new GestionEvenementException("La date d'évènement n'est pas dans le futur.");
         }
     }
@@ -54,6 +60,22 @@ public class GestionEvenementService {
         if(evenementDto.getCycle() == null ||
                 (evenementDto.getCycle() && ((evenementDto.getTypeRecurrence() == null) && (evenementDto.getValeurRecurrence() == null)))){
             throw new GestionEvenementException("Cycle présent mais les champs de type de récurrence ou valeur de récurrence vide.");
+        }
+    }
+
+    private void controleDateFormat(String stringDate) throws GestionEvenementException {
+        Date date = null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            date = sdf.parse(stringDate);
+            if (!stringDate.equals(sdf.format(date))) {
+                date = null;
+            }
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        if(date == null){
+            throw new GestionEvenementException("Format de la date doit respecter jj/mm/aaaa");
         }
     }
 }
