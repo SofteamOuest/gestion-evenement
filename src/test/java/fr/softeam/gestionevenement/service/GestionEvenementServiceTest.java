@@ -37,7 +37,7 @@ public class GestionEvenementServiceTest {
         evenementDto.setIdAuteur("pjboceno");
         String date = "02/10/2018";
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        evenementDto.setDateEvenement(sdf.parse(date));
+        evenementDto.setDateEvenement(date);
         evenementDto.setCycle(true);
         Mockito.when(evenementDao.creerEvenement(Mockito.any())).thenReturn(evenementDto);
 
@@ -60,7 +60,7 @@ public class GestionEvenementServiceTest {
         evenementDto.setIdAuteur("pjboceno");
         String date = "01/01/2018";
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        evenementDto.setDateEvenement(sdf.parse(date));
+        evenementDto.setDateEvenement(date);
         Mockito.when(evenementDao.creerEvenement(Mockito.any())).thenReturn(evenementDto);
 
         //when
