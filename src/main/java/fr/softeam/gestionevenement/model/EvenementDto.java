@@ -22,11 +22,9 @@ public class EvenementDto {
     private String idAuteur;
 
     @NotNull
-    @JsonFormat(pattern="dd/MM/yyyy")
-    private Date dateEvenement;
+    private String dateEvenement;
 
-    @JsonFormat(pattern="dd/MM/yyyy")
-    private Date dateValidation;
+    private String dateValidation;
 
     private String type;
 
@@ -37,6 +35,22 @@ public class EvenementDto {
     private String typeRecurrence;
 
     public EvenementDto() {
+    }
+
+    public void setDateEvenement(String dateEvenement) {
+        this.dateEvenement = dateEvenement;
+    }
+
+    public void setDateValidation(String dateValidation) {
+        this.dateValidation = dateValidation;
+    }
+
+    public String getDateEvenement() {
+        return dateEvenement;
+    }
+
+    public String getDateValidation() {
+        return dateValidation;
     }
 
     public Integer getIdEvenement() {
@@ -61,22 +75,6 @@ public class EvenementDto {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Date getDateEvenement() {
-        return dateEvenement;
-    }
-
-    public void setDateEvenement(Date dateEvenement) {
-        this.dateEvenement = dateEvenement;
-    }
-
-    public Date getDateValidation() {
-        return dateValidation;
-    }
-
-    public void setDateValidation(Date dateValidation) {
-        this.dateValidation = dateValidation;
     }
 
     public String getType() {
@@ -126,8 +124,8 @@ public class EvenementDto {
                 ", nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
                 ", idAuteur='" + idAuteur + '\'' +
-                ", dateEvenement=" + dateEvenement +
-                ", dateValidation=" + dateValidation +
+                ", dateEvenement='" + dateEvenement + '\'' +
+                ", dateValidation='" + dateValidation + '\'' +
                 ", type='" + type + '\'' +
                 ", cycle=" + cycle +
                 ", valeurRecurrence=" + valeurRecurrence +
