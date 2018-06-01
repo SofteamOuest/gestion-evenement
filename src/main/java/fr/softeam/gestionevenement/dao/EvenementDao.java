@@ -27,8 +27,8 @@ public class EvenementDao {
             evenementDto.setIdEvenement(resultSet.getInt("id_evenement"));
             evenementDto.setNom(resultSet.getString("nom"));
             evenementDto.setDescription(resultSet.getString("description"));
-            evenementDto.setDateEvenement(resultSet.getDate("date_evenement"));
-            evenementDto.setDateValidation(resultSet.getDate("date_validation"));
+            evenementDto.setDateEvenement(resultSet.getString("date_evenement"));
+            evenementDto.setDateValidation(resultSet.getString("date_validation"));
             evenementDto.setType(resultSet.getString("type"));
             evenementDto.setCycle(resultSet.getBoolean("cycle"));
             evenementDto.setValeurRecurrence(resultSet.getInt("valeur_reccurence"));
@@ -39,7 +39,7 @@ public class EvenementDao {
     }
 
     public List<EvenementDto> getEvenementsAfterDate(String dateLimite) {
-        String sql = "select * from evenement where date_evenement >= to_date(?,'YYYYMMDD')";
+        String sql = "select * from evenement where to_date(date_evenement,'DD/MM/YYYY') >= to_date(?,'YYYYMMDD')";
         return jdbcTemplate.query(sql,new Object[]{dateLimite}, new BeanPropertyRowMapper<>(EvenementDto.class));
     }
 
@@ -48,23 +48,15 @@ public class EvenementDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, evenementDto.getNom());
-            ps.setString(2, evenementDto.getDescription());
-            java.sql.Date dateEvenementSQL = null;
-            if(evenementDto.getDateEvenement() != null){
-                dateEvenementSQL = new java.sql.Date(evenementDto.getDateEvenement().getTime());
-            }
-            ps.setDate(3, dateEvenementSQL);
-            java.sql.Date dateValidationSQL = null;
-            if(evenementDto.getDateValidation() != null){
-                dateValidationSQL = new java.sql.Date(evenementDto.getDateValidation().getTime());
-            }
-            ps.setDate(4, dateValidationSQL);
-            ps.setString(5, evenementDto.getType());
-            ps.setBoolean(6,evenementDto.getCycle());
-            ps.setInt(7, evenementDto.getValeurRecurrence());
-            ps.setString(8, evenementDto.getTypeRecurrence());
-            ps.setString(9, evenementDto.getIdAuteur());
+            ps.setObject(1, evenementDto.getNom());
+            ps.setObject(2, evenementDto.getDescription());
+            ps.setObject(3, evenementDto.getDateEvenement());
+            ps.setObject(4, evenementDto.getDateValidation() );
+            ps.setObject(5, evenementDto.getType());
+            ps.setObject(6, evenementDto.getCycle());
+            ps.setObject(7, evenementDto.getValeurRecurrence());
+            ps.setObject(8, evenementDto.getTypeRecurrence());
+            ps.setObject(9, evenementDto.getIdAuteur());
             return ps;
         }, keyHolder);
         evenementDto.setIdEvenement((Integer) keyHolder.getKeys().get("id_evenement"));
