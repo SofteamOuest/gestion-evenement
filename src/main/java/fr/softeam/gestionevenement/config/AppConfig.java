@@ -1,6 +1,5 @@
 package fr.softeam.gestionevenement.config;
 
-import org.postgresql.jdbc2.optional.SimpleDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
