@@ -18,9 +18,6 @@ public class EvenementDto {
     @Size(min=0,max=200)
     private String description;
 
-    @Size(min=0,max=100)
-    private String idAuteur;
-
     @NotNull
     private String dateEvenement;
 
@@ -109,21 +106,12 @@ public class EvenementDto {
         this.typeRecurrence = typeRecurrence;
     }
 
-    public String getIdAuteur() {
-        return idAuteur;
-    }
-
-    public void setIdAuteur(String idAuteur) {
-        this.idAuteur = idAuteur;
-    }
-
     @Override
     public String toString() {
         return "EvenementDto{" +
                 "idEvenement=" + idEvenement +
                 ", nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
-                ", idAuteur='" + idAuteur + '\'' +
                 ", dateEvenement='" + dateEvenement + '\'' +
                 ", dateValidation='" + dateValidation + '\'' +
                 ", type='" + type + '\'' +

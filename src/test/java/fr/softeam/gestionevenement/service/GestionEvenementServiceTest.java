@@ -34,7 +34,6 @@ public class GestionEvenementServiceTest {
         EvenementDto evenementDto = new EvenementDto();
         evenementDto.setIdEvenement(2);
         evenementDto.setNom("Anniversaire");
-        evenementDto.setIdAuteur("pjboceno");
         String date = "02/10/2018";
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         evenementDto.setDateEvenement(date);
@@ -57,7 +56,6 @@ public class GestionEvenementServiceTest {
         EvenementDto evenementDto = new EvenementDto();
         evenementDto.setIdEvenement(2);
         evenementDto.setNom("Anniversaire");
-        evenementDto.setIdAuteur("pjboceno");
         String date = "01/01/2018";
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         evenementDto.setDateEvenement(date);

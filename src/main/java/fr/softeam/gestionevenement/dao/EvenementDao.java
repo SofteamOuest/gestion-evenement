@@ -33,7 +33,6 @@ public class EvenementDao {
             evenementDto.setCycle(resultSet.getBoolean("cycle"));
             evenementDto.setValeurRecurrence(resultSet.getInt("valeur_reccurence"));
             evenementDto.setTypeRecurrence(resultSet.getString("type_reccurence"));
-            evenementDto.setIdAuteur(resultSet.getString("id_auteur"));
             return evenementDto;
         });
     }
@@ -44,7 +43,7 @@ public class EvenementDao {
     }
 
     public EvenementDto creerEvenement(EvenementDto evenementDto) {
-        String sql = "insert into evenement (nom,description,date_evenement,date_validation,type,cycle,valeur_reccurence,type_reccurence,id_auteur) values (?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into evenement (nom,description,date_evenement,date_validation,type,cycle,valeur_reccurence,type_reccurence) values (?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -56,7 +55,6 @@ public class EvenementDao {
             ps.setObject(6, evenementDto.getCycle());
             ps.setObject(7, evenementDto.getValeurRecurrence());
             ps.setObject(8, evenementDto.getTypeRecurrence());
-            ps.setObject(9, evenementDto.getIdAuteur());
             return ps;
         }, keyHolder);
         evenementDto.setIdEvenement((Integer) keyHolder.getKeys().get("id_evenement"));
@@ -74,7 +72,6 @@ public class EvenementDao {
                 evenementDto.getCycle(),
                 evenementDto.getValeurRecurrence(),
                 evenementDto.getTypeRecurrence(),
-                evenementDto.getIdAuteur(),
                 idEvenement);
         evenementDto.setIdEvenement(idEvenement);
         return evenementDto;
