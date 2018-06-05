@@ -31,8 +31,8 @@ public class EvenementDao {
             evenementDto.setDateValidation(resultSet.getString("date_validation"));
             evenementDto.setType(resultSet.getString("type"));
             evenementDto.setCycle(resultSet.getBoolean("cycle"));
-            evenementDto.setValeurRecurrence(resultSet.getInt("valeur_reccurence"));
-            evenementDto.setTypeRecurrence(resultSet.getString("type_reccurence"));
+            evenementDto.setValeurRecurrence(resultSet.getInt("valeur_recurrence"));
+            evenementDto.setTypeRecurrence(resultSet.getString("type_recurrence"));
             return evenementDto;
         });
     }
@@ -43,7 +43,7 @@ public class EvenementDao {
     }
 
     public EvenementDto creerEvenement(EvenementDto evenementDto) {
-        String sql = "insert into evenement (nom,description,date_evenement,date_validation,type,cycle,valeur_reccurence,type_reccurence) values (?,?,?,?,?,?,?,?)";
+        String sql = "insert into evenement (nom,description,date_evenement,date_validation,type,cycle,valeur_recurrence,type_recurrence) values (?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -62,7 +62,7 @@ public class EvenementDao {
     }
 
     public EvenementDto modifierEvenement(int idEvenement, EvenementDto evenementDto) {
-        String sql = "update evenement set nom = ?, description = ?, date_evenement = ?, date_validation = ?, type = ?, cycle = ?, valeur_reccurence = ?, type_reccurence = ?, id_auteur = ? where id_evenement = ?";
+        String sql = "update evenement set nom = ?, description = ?, date_evenement = ?, date_validation = ?, type = ?, cycle = ?, valeur_recurrence = ?, type_reccurence = ?, id_auteur = ? where id_evenement = ?";
         jdbcTemplate.update(sql,
                 evenementDto.getNom(),
                 evenementDto.getDescription(),
