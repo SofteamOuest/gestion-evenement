@@ -62,7 +62,7 @@ public class EvenementDao {
     }
 
     public EvenementDto modifierEvenement(int idEvenement, EvenementDto evenementDto) {
-        String sql = "update evenement set nom = ?, description = ?, date_evenement = ?, date_validation = ?, type = ?, cycle = ?, valeur_recurrence = ?, type_reccurence = ?, id_auteur = ? where id_evenement = ?";
+        String sql = "update evenement set nom = ?, description = ?, date_evenement = ?, date_validation = ?, type = ?, cycle = ?, valeur_recurrence = ?, type_recurrence = ? where id_evenement = ?";
         jdbcTemplate.update(sql,
                 evenementDto.getNom(),
                 evenementDto.getDescription(),
