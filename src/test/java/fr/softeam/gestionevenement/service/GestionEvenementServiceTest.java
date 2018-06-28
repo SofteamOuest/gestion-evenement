@@ -46,10 +46,11 @@ public class GestionEvenementServiceTest {
         // then
         assertThat(thrown).isInstanceOf(GestionEvenementException.class);
         final GestionEvenementException gee = (GestionEvenementException) thrown;
-        assertThat(gee.getMessage()).isEqualTo("Cycle présent mais les champs de type de récurrence ou valeur de récurrence vide.");
+        assertThat(gee.getErreurEvenementDto().getMessageErreur()).isEqualTo("Cycle présent mais les champs de type de récurrence ou valeur de récurrence sont vides.");
         assertThat(gee).isNotNull();
     }
 
+    /*
     @Test
     public void given_dateEvenement_pas_dans_le_futur_when_create_then_throw_exception() throws GestionEvenementException, ParseException {
         //given
@@ -70,4 +71,5 @@ public class GestionEvenementServiceTest {
         assertThat(gee.getMessage()).isEqualTo("La date d'évènement n'est pas dans le futur.");
         assertThat(gee).isNotNull();
     }
+    */
 }
