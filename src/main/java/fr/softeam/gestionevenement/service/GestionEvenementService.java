@@ -51,15 +51,17 @@ public class GestionEvenementService {
     private void controleDateEvenementDansLeFutur(EvenementDto evenementDto) throws GestionEvenementException {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        if(evenementDto.getDateEvenement() == null  || (LocalDate.parse(evenementDto.getDateEvenement(),formatter).isBefore(currentDate))){
+        // A ré-implémenter lorsque l'ajout de tous les collaborateurs sera fait --> Voir avec Florie
+       /* if(evenementDto.getDateEvenement() == null  || (LocalDate.parse(evenementDto.getDateEvenement(),formatter).isBefore(currentDate))){
             throw new GestionEvenementException("La date d'évènement n'est pas dans le futur.");
         }
+        */
     }
 
     private void controleCycle(EvenementDto evenementDto) throws GestionEvenementException {
         if(evenementDto.getCycle() != null &&
                 (evenementDto.getCycle() && ((evenementDto.getTypeRecurrence() == null) && (evenementDto.getValeurRecurrence() == null)))){
-            throw new GestionEvenementException("Cycle présent mais les champs de type de récurrence ou valeur de récurrence vide.");
+            throw new GestionEvenementException("Cycle présent mais les champs de type de récurrence ou valeur de récurrence sont vides.");
         }
     }
 
