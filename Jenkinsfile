@@ -77,7 +77,7 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
             stage('deploy'){
 
 
-                build job: "/SofteamOuest/referentiel-gestion-evenement-run/master",
+                build job: "/SofteamOuest/gestion-evenement-run/master",
                   wait: false,
                   parameters: [[$class: 'StringParameterValue', name: 'image', value: "$now"]]
 
