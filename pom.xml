@@ -31,7 +31,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>5.0.7</version>
                 <configuration>
-                    <url>jdbc:postgresql://localhost:5432/event-softeam</url>
+                    <url>jdbc:postgresql://localhost:5432/eventdb</url>
                     <user>postgres</user>
                     <password>postgres</password>
                 </configuration>

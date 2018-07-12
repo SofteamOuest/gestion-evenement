@@ -1,0 +1,16 @@
+version: '3.2'
+services:
+
+  gestion-evenement-postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile-postgres
+
+  gestion-evenement:
+    build:
+      context: .
+      dockerfile: Dockerfile-back
+    depends_on:
+    - gestion-evenement-postgres
+    ports:
+    - "8081:8091"
