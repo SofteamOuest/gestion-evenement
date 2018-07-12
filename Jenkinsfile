@@ -54,8 +54,9 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
 
                 stage('build docker image'){
 
+                    sh "docker-compose build"
 
-                    sh "docker build -t registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement:$now ."
+                    sh "docker tag registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement:$now"
 
                     sh 'mkdir /etc/docker'
 

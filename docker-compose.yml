@@ -2,11 +2,13 @@ version: '3.2'
 services:
 
   gestion-evenement-postgres:
+    image: registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-rappel-pg
     build:
       context: .
       dockerfile: Dockerfile-postgres
 
   gestion-evenement:
+    image: registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-rappel
     build:
       context: .
       dockerfile: Dockerfile-back
