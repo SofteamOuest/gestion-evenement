@@ -13,4 +13,4 @@ services:
     depends_on:
     - gestion-evenement-postgres
     ports:
-    - "8081:8091"
+    - "8081:80"
