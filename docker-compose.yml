@@ -2,13 +2,13 @@ version: '3.2'
 services:
 
   gestion-evenement-postgres:
-    image: registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement-postgres
+    image: registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement-postgres:${tag}
     build:
       context: .
       dockerfile: Dockerfile-postgres
 
   gestion-evenement:
-    image: registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement
+    image: registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement:${tag}
     build:
       context: .
       dockerfile: Dockerfile-back

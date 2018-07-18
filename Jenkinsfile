@@ -26,18 +26,18 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
 
         properties([
                 buildDiscarder(
-                    logRotator(
-                        artifactDaysToKeepStr: '1',
-                        artifactNumToKeepStr: '1',
-                        daysToKeepStr: '3',
-                        numToKeepStr: '3'
-                    )
+                        logRotator(
+                                artifactDaysToKeepStr: '1',
+                                artifactNumToKeepStr: '1',
+                                daysToKeepStr: '3',
+                                numToKeepStr: '3'
+                        )
                 )
             ])
 
         def now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
 
-        stage('checkout sources'){
+        stage('checkout sources') {
             checkout scm;
         }
 
@@ -53,11 +53,6 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
 
                 stage('build docker image'){
 
-
-                    sh "docker build -f Dockerfile-back -t registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement:$now ."
-
-                    sh "docker build -f Dockerfile-postgres -t registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement-postgres:$now ."
-
                     sh 'mkdir /etc/docker'
 
                     // le registry est insecure (pas de https)
@@ -68,21 +63,20 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
                          sh "docker login -u admin -p ${NEXUS_PWD} registry.k8.wildwidewest.xyz"
                     }
 
-                    sh "docker push registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement:$now"
+                    sh "tag=$now docker-compose build"
 
-                    sh "docker push registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement-postgres:$now"
-
+                    sh "tag=$now docker-compose push"
                 }
         }
 
         container('kubectl') {
 
-            stage('deploy'){
+            stage('deploy') {
 
-
-                build job: "/SofteamOuest/gestion-evenement-run/master",
-                  wait: false,
-                  parameters: [[$class: 'StringParameterValue', name: 'image', value: "$now"]]
+                build job: "/SofteamOuest/chart-run/master",
+                        wait: false,
+                        parameters: [[$class: 'StringParameterValue', name: 'image', value: "$now",
+                                $class: 'StringParameterValue', name: 'chart', value: "gestion-evenement"]]
 
             }
         }
