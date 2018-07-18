@@ -38,7 +38,7 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
         def now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
 
         stage('checkout sources') {
-            checkout scm;
+            checkout scm
         }
 
         container('maven') {
@@ -51,7 +51,7 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
 
         container('docker') {
 
-                stage('build docker image'){
+                stage('build docker image') {
 
                     sh 'mkdir /etc/docker'
 
@@ -75,9 +75,8 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
 
                 build job: "/SofteamOuest/chart-run/master",
                         wait: false,
-                        parameters: [[$class: 'StringParameterValue', name: 'image', value: "$now",
-                                $class: 'StringParameterValue', name: 'chart', value: "gestion-evenement"]]
-
+                        parameters: [string(name: 'image', value: "$now"),
+                                        string(name: 'chart', value: "gestion-evenement")]
             }
         }
     }
