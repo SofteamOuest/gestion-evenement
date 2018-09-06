@@ -75,8 +75,7 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
                 build job: "/SofteamOuest/chart-run/master",
                         wait: false,
                         parameters: [string(name: 'image', value: "$now"),
-                                        string(name: 'chart', value: "gestion-evenement"),
-                                        string(name: 'env', value: branch)]
+                                        string(name: 'chart', value: "gestion-evenement")]
             }
         }
     }
