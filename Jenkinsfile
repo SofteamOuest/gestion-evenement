@@ -50,7 +50,7 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
 
         container('docker') {
 
-                stage('build docker image') {
+            stage('build docker image') {
 
                     sh 'mkdir /etc/docker'
 
@@ -65,17 +65,16 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
                     sh "tag=$now docker-compose build"
 
                     sh "tag=$now docker-compose push"
-                }
+            }
         }
 
         container('kubectl') {
 
             stage('deploy') {
 
-                build job: "/SofteamOuest/chart-run/master",
-                        wait: false,
-                        parameters: [string(name: 'image', value: "$now"),
-                                        string(name: 'chart', value: "gestion-evenement")]
+                build job: '/SOFTEAMOUEST/chart-run/master', parameters: [
+                    string(name: 'image', value: "$now"),
+                    string(name: 'chart', value: "gestion-evenement")], wait: false
             }
         }
     }
