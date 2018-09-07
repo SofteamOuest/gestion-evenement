@@ -11,7 +11,7 @@ services:
     image: registry.k8.wildwidewest.xyz/repository/docker-repository/pocs/meltingpoc-gestion-evenement:${tag}
     build:
       context: .
-      dockerfile: Dockerfile-back
+      dockerfile: Dockerfile
     depends_on:
     - gestion-evenement-postgres
     ports:
