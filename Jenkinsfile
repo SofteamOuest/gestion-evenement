@@ -18,7 +18,7 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
 
         // montage nécessaire pour que le conteneur docker fonction (Docker In Docker)
         volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
-                  persistentVolumeClaim(mountPath: '/root/.m2/repository', claimName: 'pvc-jenkins-mvn', readOnly: true)
+                  persistentVolumeClaim(mountPath: '/root/.m2/repository', claimName: 'pv-jenkins-mvn', readOnly: true)
         ]
 ) {
 
