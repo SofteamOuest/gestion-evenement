@@ -33,7 +33,7 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
                                 numToKeepStr: '3'
                         )
                 )
-            ])
+        ])
 
         def now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
 
@@ -44,7 +44,9 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
         container('maven') {
 
             stage('BUILD SOURCES') {
-                sh 'mvn clean install -DskipTests sonar:sonar -Dsonar.host.url=http://sonarqube-sonarqube:9000 -Dsonar.java.binaries=target'
+                withCredentials([string(credentialsId: 'sonarqube_token', variable: 'token')]) {
+                    sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://sonarqube-sonarqube:9000 -Dsonar.java.binaries=target -Dsonar.login=${token} -DskipTests'
+                }
             }
         }
 
@@ -52,19 +54,19 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
 
             stage('BUILD DOCKER IMAGE') {
 
-                    sh 'mkdir /etc/docker'
+                sh 'mkdir /etc/docker'
 
-                    // le registry est insecure (pas de https)
-                    sh 'echo {"insecure-registries" : ["registry.k8.wildwidewest.xyz"]} > /etc/docker/daemon.json'
+                // le registry est insecure (pas de https)
+                sh 'echo {"insecure-registries" : ["registry.k8.wildwidewest.xyz"]} > /etc/docker/daemon.json'
 
-                    withCredentials([usernamePassword(credentialsId: 'nexus_user', usernameVariable: 'username', passwordVariable: 'password')]) {
+                withCredentials([usernamePassword(credentialsId: 'nexus_user', usernameVariable: 'username', passwordVariable: 'password')]) {
 
-                         sh "docker login -u ${username} -p ${password} registry.k8.wildwidewest.xyz"
-                    }
+                    sh "docker login -u ${username} -p ${password} registry.k8.wildwidewest.xyz"
+                }
 
-                    sh "tag=$now docker-compose build"
+                sh "tag=$now docker-compose build"
 
-                    sh "tag=$now docker-compose push"
+                sh "tag=$now docker-compose push"
             }
         }
 
@@ -73,8 +75,8 @@ podTemplate(label: 'meltingpoc-gestion-evenement-pod', nodeSelector: 'medium', c
             stage('RUN') {
 
                 build job: '/SOFTEAMOUEST/chart-run/master', parameters: [
-                    string(name: 'image', value: "$now"),
-                    string(name: 'chart', value: "gestion-evenement")], wait: false
+                        string(name: 'image', value: "$now"),
+                        string(name: 'chart', value: "gestion-evenement")], wait: false
             }
         }
     }
